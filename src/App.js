@@ -1,11 +1,11 @@
 import React from 'react';
-
 import './App.css';
+import OhmCalculator from './ohmCalculator';
 
 function App() {
   return (
     <div className="App">
-      <h1>GCC ASSESSMENT</h1>
+      <OhmCalculator />
     </div>
   );
 }
