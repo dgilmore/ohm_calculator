@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {Container, Form, Dropdown} from 'semantic-ui-react'
+import {Container, Form, Dropdown, Segment, Message} from 'semantic-ui-react'
+import desktopImage from './electronic.jpeg'
 
 //Does not include gold or silver, since they do not every appear in first two bands.
 const ABoptions = [
@@ -41,50 +42,48 @@ export default class OhmCalculator extends Component {
         bandA : '',
         bandB : '',
         bandC : '',
-        bandD : '',
+        bandD : 20,
         result : ''
       };
     }
  
-    handleChange = (event) => {
-        this.setState({[event.target.name]: event.target.value})
-        console.log(event.target.value)
-    }
-
     handleA = (e, { value }) => {
-        this.setState({ bandA: value*10 })
-        console.log(e.target.text)
-        console.log(value)
+        this.setState({ bandA: value*10 }, function() {
+          var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
+          this.setState({result: res})
+       })    
     }
 
     handleB = (e, {value}) => {
-        this.setState({ bandB : value})
+        this.setState({ bandB : value}, function() {
+          var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
+          this.setState({result: res})
+        })   
     }
 
     handleC = (e, {value}) => {
-        this.setState({ bandC : value})
+        this.setState({ bandC : value}, function() {
+          var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
+          this.setState({result: res})
+        })    
     }
 
     handleD = (e, {value}) => {
-        this.setState({ bandD : value})
-    }
-    
-
-    handleSubmit = () => {
-        console.log("Ran Submit")
-        var result = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
-        this.setState({result: "The Resister is: " + result + " Ohms, with a tolerance of %" + this.state.bandD + "+_."})
-
+        this.setState({ bandD : value}, function()  {
+          var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
+          this.setState({result: res})
+         })   
     }
 
     render(){
         return(
-            <div>
-                <Container>
+            <div className="App" style={{backgroundImage : `url(${desktopImage})` }}>
+                <div className="form">
+                <Segment>
                     <h1>Resistor Ohm Calculator</h1>
                 <Form onSubmit={this.handleSubmit}>
                 <Form.Field>
-                <Dropdown
+                <Dropdown color='red'
                     placeholder='Select Band A Color'
                     fluid
                     search
@@ -119,18 +118,16 @@ export default class OhmCalculator extends Component {
                     fluid
                     search
                     selection
-                    options={tolerance}
+                    options={tolerance}ß
                     onChange={this.handleD}
                  />
                 </Form.Field>
-                
-                <Form.Button content='Submit'/>
                 </Form>
-                <div className="dnaResponse">
-                    { this.state.result === '' ? <h1> </h1> : <h1>{this.state.result}</h1> }
+                <div className="ohmResponse" style={{paddingTop: '10px'}}>
+                    { this.state.bandA === '' || this.state.bandB === ''  ? <h1> Invalid Resistor</h1> : <Message info><h1>Your Resistor has a resistance of {this.state.result} Ohms, with a tolerance of +- {this.state.bandD}%.</h1></Message> }
                </div>
-          
-                </Container>
+                </Segment>
+                </div>
             </div>
         )
     }
