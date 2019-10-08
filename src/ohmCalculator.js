@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import {Container, Form, Dropdown, Segment, Message} from 'semantic-ui-react'
 import desktopImage from './electronic.jpeg'
+import './App.css'
+
+
 
 //Does not include gold or silver, since they do not every appear in first two bands.
 const ABoptions = [
@@ -34,6 +37,12 @@ const tolerance = [
     {key: 'Grey', value: 0.05, text: 'Grey'}
 ]
 
+const colorMatch = [
+    {key: 0, value: 'black'}
+]
+
+
+
 
 export default class OhmCalculator extends Component {
     constructor(){
@@ -43,47 +52,81 @@ export default class OhmCalculator extends Component {
         bandB : '',
         bandC : '',
         bandD : 20,
+        colorA: '',
+        colorB: '',
+        colorC: '',
+        colorD: '',
         result : ''
       };
     }
  
     handleA = (e, { value }) => {
         this.setState({ bandA: value*10 }, function() {
+          var color
           var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
           this.setState({result: res})
-       })    
+          ABoptions.forEach(function(key) {
+            if(key.value === value){
+                color = key.key.toLowerCase()
+            }
+          })
+          this.setState({colorA: color})
+       })   
     }
 
     handleB = (e, {value}) => {
         this.setState({ bandB : value}, function() {
+          var color
           var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
           this.setState({result: res})
+          ABoptions.forEach(function(key) {
+            if(key.value === value){
+                color = key.key.toLowerCase()
+            }
+          })
+          this.setState({colorB: color})
+          
         })   
     }
 
     handleC = (e, {value}) => {
         this.setState({ bandC : value}, function() {
+          var color
           var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
           this.setState({result: res})
+          cOptions.forEach(function(key) {
+            if(key.value === value){
+                color = key.key.toLowerCase()
+            }
+          })
+          this.setState({colorC: color})
         })    
     }
 
     handleD = (e, {value}) => {
         this.setState({ bandD : value}, function()  {
+          var color
           var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
           this.setState({result: res})
+          tolerance.forEach(function(key) {
+            if(key.value === value){
+                color = key.key.toLowerCase()
+            }
+          })
+          this.setState({colorD: color})
          })   
+         
     }
 
     render(){
         return(
-            <div className="App" style={{backgroundImage : `url(${desktopImage})` }}>
+            <div className="App" >
                 <div className="form">
                 <Segment>
                     <h1>Resistor Ohm Calculator</h1>
-                <Form onSubmit={this.handleSubmit}>
+                <Form >
                 <Form.Field>
-                <Dropdown color='red'
+                <Dropdown 
                     placeholder='Select Band A Color'
                     fluid
                     search
@@ -127,6 +170,14 @@ export default class OhmCalculator extends Component {
                     { this.state.bandA === '' || this.state.bandB === ''  ? <h1> Invalid Resistor</h1> : <Message info><h1>Your Resistor has a resistance of {this.state.result} Ohms, with a tolerance of +- {this.state.bandD}%.</h1></Message> }
                </div>
                 </Segment>
+                </div>
+                <div className="displayResistor" >
+                  <div className="resistor bands">
+                    <div className="box1" style={{backgroundColor: `${this.state.colorA}`}}></div>
+                    <div className="box2" style={{backgroundColor: `${this.state.colorB}`}}></div>
+                    <div className="box3" style={{backgroundColor: `${this.state.colorC}`}}></div>
+                    <div className="box4" style={{backgroundColor: `${this.state.colorD}`}}></div>
+                  </div> 
                 </div>
             </div>
         )

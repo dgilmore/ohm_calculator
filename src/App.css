@@ -4,9 +4,54 @@
     background-repeat: repeat;
     background-position: top center;
 }
+
 .form{
-  padding-top: 100px;
+  padding-top: 30px;
   padding-right: 60px;
   padding-left: 60px;
 }
 
+.displayResistor{
+  text-align: center;
+  padding-top: 50px;
+}
+
+.box1{
+  height: 200px;
+  width: 15px;
+  display: inline-block;
+  margin-right: 15px;
+  margin-left: -50px;
+}
+
+.box2{
+  height: 200px;
+  width: 15px;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.box3{
+  height: 200px;
+  width: 15px;
+  display: inline-block;
+  margin-right: 45px;
+}
+
+.box4{
+  height: 200px;
+  width: 15px;
+  display: inline-block;
+}
+
+.resistor{
+    width: 400px;
+    height: 200px;
+    background-color: #bc9844;
+    border-radius: 25%;
+    display: inline-block;
+}
+
+.bands{
+  position: relative;
+}
