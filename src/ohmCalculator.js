@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import {Container, Form, Dropdown, Segment, Message} from 'semantic-ui-react'
-import desktopImage from './electronic.jpeg'
+import {Form, Dropdown, Segment, Message} from 'semantic-ui-react'
 import './App.css'
 
 
@@ -37,13 +36,6 @@ const tolerance = [
     {key: 'Grey', value: 0.05, text: 'Grey'}
 ]
 
-const colorMatch = [
-    {key: 0, value: 'black'}
-]
-
-
-
-
 export default class OhmCalculator extends Component {
     constructor(){
       super()
@@ -60,6 +52,8 @@ export default class OhmCalculator extends Component {
       };
     }
  
+    //These handlers have been my biggest issue, something about how react and semantic handle dropdown menus has made it difficult to
+    //grab the name of the drop down being asccessed, so I couldn't write a general handler instead of 4 seperate handlers for each situation. 
     handleA = (e, { value }) => {
         this.setState({ bandA: value*10 }, function() {
           var color
@@ -119,6 +113,17 @@ export default class OhmCalculator extends Component {
     }
 
     render(){
+        let display
+        if(this.state.bandA === '' && this.state.bandB === ''){
+            display = <h1></h1>
+        }
+        if((this.state.bandA != '' && this.state.bandB === '') || (this.state.bandA === '' && this.state.bandB != '')){
+            display = <Message><h1>Invalid Resistor</h1></Message>
+        }
+        else {
+            display = <Message><h1>Your Resistor has a resistance of {this.state.result} Ohms, with a tolerance of +- {this.state.bandD}%.</h1></Message>
+        }
+
         return(
             <div className="App" >
                 <div className="form">
@@ -167,7 +172,7 @@ export default class OhmCalculator extends Component {
                 </Form.Field>
                 </Form>
                 <div className="ohmResponse" style={{paddingTop: '10px'}}>
-                    { this.state.bandA === '' || this.state.bandB === ''  ? <h1> Invalid Resistor</h1> : <Message info><h1>Your Resistor has a resistance of {this.state.result} Ohms, with a tolerance of +- {this.state.bandD}%.</h1></Message> }
+                    { display }
                </div>
                 </Segment>
                 </div>
