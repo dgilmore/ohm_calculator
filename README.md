@@ -10,7 +10,7 @@ Fork this repo and change into the root directory.<br />
 Run `yarn install` to download all dependencies for the application<br />
 Run `yarn start` and the development app will start on localhost.
 
-The project is also live at : 
+The project is also live at [here](https://gccassessment-1yj8nfel7.now.sh/)
 
 ### `yarn test`
 
