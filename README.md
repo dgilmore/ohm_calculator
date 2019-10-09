@@ -6,7 +6,8 @@ This project was built using create react-app.
 
 ### To run this project
 
-Runs the app in the development mode.<br />
+Fork this repo and change into the root directory.<br />
+Run `yarn install`
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
