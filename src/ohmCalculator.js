@@ -52,24 +52,27 @@ export default class OhmCalculator extends Component {
       };
     }
  
-    //These handlers have been my biggest issue, something about how react and semantic handle dropdown menus has made it difficult to
-    //grab the name of the drop down being asccessed, so I couldn't write a general handler instead of 4 seperate handlers for each situation. 
-    handleA = (e, { value }) => {
-        this.setState({ bandA: value*10 }, function() {
-          var color
-          var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
-          this.setState({result: res})
-          ABoptions.forEach(function(key) {
-            if(key.value === value){
-                color = key.key.toLowerCase()
-            }
-          })
-          this.setState({colorA: color})
-       })   
+    //There could be one default onChange handler for all 4 dropdown elements, but when I wrote that function, it was long
+    //and hard to read. I ultimately felt that four easy to read and understand handlers was the way to go. 
+    handleA = (e, {name, value} ) => {
+
+        this.setState({ [name] : value}, function() {
+            var color
+            var res = (this.state.bandA*10 + this.state.bandB) * (Math.pow(10, this.state.bandC))
+            this.setState({result: res})
+            ABoptions.forEach(function(key) {
+              if(key.value === value){
+                  color = key.key.toLowerCase()
+              }
+            })
+            this.setState({colorA: color})
+            
+          })      
+
     }
 
-    handleB = (e, {value}) => {
-        this.setState({ bandB : value}, function() {
+    handleB = (e, {name, value}) => {
+        this.setState({ [name] : value}, function() {
           var color
           var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
           this.setState({result: res})
@@ -83,8 +86,8 @@ export default class OhmCalculator extends Component {
         })   
     }
 
-    handleC = (e, {value}) => {
-        this.setState({ bandC : value}, function() {
+    handleC = (e, {name, value}) => {
+        this.setState({ [name] : value}, function() {
           var color
           var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
           this.setState({result: res})
@@ -97,8 +100,8 @@ export default class OhmCalculator extends Component {
         })    
     }
 
-    handleD = (e, {value}) => {
-        this.setState({ bandD : value}, function()  {
+    handleD = (e, {name, value}) => {
+        this.setState({ [name] : value}, function()  {
           var color
           var res = (this.state.bandA + this.state.bandB) * (Math.pow(10, this.state.bandC))
           this.setState({result: res})
@@ -115,9 +118,9 @@ export default class OhmCalculator extends Component {
     render(){
         let display
         if(this.state.bandA === '' && this.state.bandB === ''){
-            display = <h1></h1>
+            display = <h1> </h1>
         }
-        if((this.state.bandA != '' && this.state.bandB === '') || (this.state.bandA === '' && this.state.bandB != '')){
+        if((this.state.bandA !== '' && this.state.bandB === '') || (this.state.bandA === '' && this.state.bandB !== '')){
             display = <Message><h1>Invalid Resistor</h1></Message>
         }
         else {
@@ -133,6 +136,7 @@ export default class OhmCalculator extends Component {
                 <Form.Field>
                 <Dropdown 
                     placeholder='Select Band A Color'
+                    name="bandA"
                     fluid
                     search
                     selection
@@ -143,6 +147,7 @@ export default class OhmCalculator extends Component {
                 <Form.Field>
                 <Dropdown
                     placeholder='Select Band B Color'
+                    name="bandB"
                     fluid
                     search
                     selection
@@ -153,6 +158,7 @@ export default class OhmCalculator extends Component {
                 <Form.Field>
                 <Dropdown
                     placeholder='Select a Multiplier'
+                    name="bandC"
                     fluid
                     search
                     selection
@@ -163,10 +169,11 @@ export default class OhmCalculator extends Component {
                 <Form.Field>
                 <Dropdown
                     placeholder='Select a Tolerance'
+                    name="bandD"
                     fluid
                     search
                     selection
-                    options={tolerance}ß
+                    options={tolerance}
                     onChange={this.handleD}
                  />
                 </Form.Field>
