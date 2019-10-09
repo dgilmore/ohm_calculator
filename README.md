@@ -7,11 +7,10 @@ This project was built using create react-app.
 ### To run this project
 
 Fork this repo and change into the root directory.<br />
-Run `yarn install`
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Run `yarn install` to download all dependencies for the application<br />
+Run `yarn start` and the development app will start on localhost.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The project is also live at : 
 
 ### `yarn test`
 
